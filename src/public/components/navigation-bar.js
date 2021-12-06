@@ -9,7 +9,6 @@ import useStyles from "../style";
 
 export default function NavigationBar({ setOpen, open }) {
   const classes = useStyles();
-
   const showQuizForm = () => {
     if (open === false) {
       setOpen(true);
@@ -18,7 +17,7 @@ export default function NavigationBar({ setOpen, open }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar className={classes.toolBar}>
+        <Toolbar>
           <Typography
             variant="h6"
             noWrap

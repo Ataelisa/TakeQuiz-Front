@@ -2,8 +2,8 @@ import Box from "@mui/material/Box";
 import NavigationBar from "../components/navigation-bar";
 import React from "react";
 import { Typography } from "@mui/material";
-import useStyles from "../style";
 import ListingQuiz from "./listing-quiz";
+import useStyles from "../style";
 
 const Layout = () => {
   const classes = useStyles();
@@ -11,7 +11,7 @@ const Layout = () => {
 
   return (
     <Box>
-      <NavigationBar setOpen={setOpen} open={open} />
+      <NavigationBar setOpen={setOpen} open={open} classes={classes} />
       <Box sx={{ width: "auto" }} mt={1} mx={2}>
         <Box
           component="div"
@@ -25,7 +25,7 @@ const Layout = () => {
         </Box>
 
         {/* la liste des quiz */}
-        <ListingQuiz></ListingQuiz>
+        <ListingQuiz open={open} setOpen={setOpen}></ListingQuiz>
       </Box>
     </Box>
   );
