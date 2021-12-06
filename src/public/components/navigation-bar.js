@@ -1,39 +1,40 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import QuizIcon from "@mui/icons-material/Quiz";
+import useStyles from "../style";
 
-const useStyles = makeStyles({
-    navBar:{
-        background: "red"
-    },
-});
+export default function NavigationBar({ setOpen, open }) {
+  const classes = useStyles();
 
-export default function NavigationBar() {
-    const classes = useStyles();
+  const showQuizForm = () => {
+    if (open === false) {
+      setOpen(true);
+    }
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            className={classes.navBar}
-          >
-          </IconButton>
+        <Toolbar className={classes.toolBar}>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{ flexGrow: 1, display: { xs: "block", sm: "block" } }}
           >
-            TakeQuiz ....
+            TakeQuiz &hellip;
           </Typography>
+          <IconButton
+            title="add Quiz"
+            sx={{ mr: 2 }}
+            className={classes.iconBtn}
+            onClick={showQuizForm}
+          >
+            <QuizIcon className={classes.quizIcon}></QuizIcon>
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>
