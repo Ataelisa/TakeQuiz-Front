@@ -10,7 +10,7 @@ export default function CustomDialog({ title, open, setOpen, children }) {
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} fullWidth={true}>
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
       </Dialog>
