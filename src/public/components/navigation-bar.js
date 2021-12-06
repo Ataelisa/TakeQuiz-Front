@@ -30,7 +30,7 @@ export default function NavigationBar({ setOpen, open }) {
           <IconButton
             title="add Quiz"
             sx={{ mr: 2 }}
-            className={classes.iconBtn}
+            className={classes.root}
             onClick={showQuizForm}
           >
             <QuizIcon className={classes.quizIcon}></QuizIcon>

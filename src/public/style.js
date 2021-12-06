@@ -1,7 +1,7 @@
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
-  iconBtn: {
+  root: {
     background: "white",
     "&:hover": {
       backgroundColor: "white",
