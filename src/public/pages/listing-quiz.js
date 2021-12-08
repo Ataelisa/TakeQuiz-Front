@@ -4,18 +4,21 @@ import Grid from "@mui/material/Grid";
 import QuizCard from "../components/quiz-card";
 import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import useStyles from "../style";
 import CustomDialog from "../components/custom-dialog";
 import CreateQuiz from "../components/create-quiz";
+import { styled } from "@mui/system";
 
+const StyledBox = styled(Box)({
+  marginLeft: "30%",
+  marginRight: "30%",
+})
 const ListingQuiz = ({ open, setOpen }) => {
-  const classes = useStyles();
   return (
     <>
       <CustomDialog open={open} setOpen={setOpen} title={"Create The Quiz"}>
         <CreateQuiz></CreateQuiz>
       </CustomDialog>
-      <Box sx={{ width: "40%" }} className={classes.textBox}>
+      <StyledBox sx={{ width: "40%" }} >
         <TextField
           id="input-with-icon-textfield"
           InputProps={{
@@ -29,7 +32,7 @@ const ListingQuiz = ({ open, setOpen }) => {
           variant="outlined"
           size="small"
         />
-      </Box>
+      </StyledBox>
       <Box sx={{ flexGrow: 1 }} mt={4}>
         <Grid
           container
