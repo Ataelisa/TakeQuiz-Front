@@ -9,10 +9,14 @@ import  CardHeader  from '@mui/material/CardHeader';
 import ListMenu from '../components/List-Menu';
 import CustomDialog from './custom-dialog';
 import EditQuiz from './edit-quiz';
+import { styled } from "@mui/system";
 
-
-
-export default function QuizCard() {
+const QUIZ_S
+const StyledCardMedia = styled(CardMedia)({
+  "objectFit": "contain",
+  "background": 'beige',
+})
+export default function QuizCard({quiz}) {
   const [openEditCard, setOpenEditCard] = React.useState(false)
 
   const handleChangeEditCard = () => {
@@ -28,15 +32,15 @@ export default function QuizCard() {
             <ListMenu handleChangeEditCard={handleChangeEditCard}></ListMenu>
         </IconButton>
       }
-        title="Name"
+        title={quiz?.name}
         subheader="Theme,Status"
       />
      
-      <CardMedia
+      <StyledCardMedia
         component="img"
         height="194"
-        image="https://th.bing.com/th/id/R.33d02c67b4a6e90abe2d7a58f764edd8?rik=gA%2fesQP2%2f0%2b5uw&riu=http%3a%2f%2fwww.snut.fr%2fwp-content%2fuploads%2f2015%2f12%2fimage-de-nature-9.jpg&ehk=4oiNLekZZh50XowVszovQmq8w%2fH0S6GIwQYqeKknWaM%3d&risl=&pid=ImgRaw&r=0"
-        alt="Paella dish"
+        image={quiz?.image}
+        alt="quiz image"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
