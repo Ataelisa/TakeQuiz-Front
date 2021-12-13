@@ -7,12 +7,18 @@ import SearchIcon from "@mui/icons-material/Search";
 import CustomDialog from "../components/custom-dialog";
 import CreateQuiz from "../components/create-quiz";
 import { styled } from "@mui/system";
+import { getListQuiz } from "../../_actions/quiz_actions";
+import useSWR from "swr";
 
 const StyledBox = styled(Box)({
   marginLeft: "30%",
   marginRight: "30%",
 })
 const ListingQuiz = ({ open, setOpen }) => {
+  const { data: somethings} = useSWR( () =>
+    getListQuiz()
+  )
+
   return (
     <>
       <CustomDialog open={open} setOpen={setOpen} title={"Create The Quiz"}>
@@ -40,7 +46,7 @@ const ListingQuiz = ({ open, setOpen }) => {
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
           {Array.from(Array(9)).map((_, index) => (
-            <Grid item xs={2} sm={4} md={4} key={index}>
+            <Grid item xs={2} sm={3} md={3} key={index}>
               <QuizCard title={`card ${index}`}></QuizCard>
             </Grid>
           ))}
