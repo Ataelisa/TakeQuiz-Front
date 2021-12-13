@@ -12,16 +12,13 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-export default function ListMenu({ open, setOpen }) {
+export default function LongMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget);
-   // setOpen(true);
   };
   const handleClose = () => {
-   
     setAnchorEl(null);
   };
 
@@ -53,7 +50,7 @@ export default function ListMenu({ open, setOpen }) {
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option}  onClick={handleClose()}>
+          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
             {option}
           </MenuItem>
         ))}

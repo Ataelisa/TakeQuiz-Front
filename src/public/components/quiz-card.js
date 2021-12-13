@@ -8,9 +8,7 @@ import  CardMedia  from '@mui/material/CardMedia';
 import  CardHeader  from '@mui/material/CardHeader';
 import ListMenu from '../components/List-Menu';
 
-
-
-export default function QuizCard({open,setOpen}) {
+export default function QuizCard() {
   return (
     <Card sx={{ maxWidth: 345 }}
         
@@ -18,7 +16,7 @@ export default function QuizCard({open,setOpen}) {
       <CardHeader
        action={
         <IconButton aria-label="settings">
-            {/* <ListMenu open={open} setOpen={setOpen}></ListMenu>   */}
+            <ListMenu></ListMenu>  
         </IconButton>
       }
         title="Name"
