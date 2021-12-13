@@ -7,17 +7,24 @@ import SearchIcon from "@mui/icons-material/Search";
 import CustomDialog from "../components/custom-dialog";
 import CreateQuiz from "../components/create-quiz";
 import { styled } from "@mui/system";
+import EditQuiz from "../components/edit-quiz";
 
 const StyledBox = styled(Box)({
   marginLeft: "30%",
   marginRight: "30%",
 })
 const ListingQuiz = ({ open, setOpen }) => {
+  const [openEditCard, setOpenEditCard] = React.useState(false)
   return (
     <>
-      <CustomDialog open={open} setOpen={setOpen} title={"Create The Quiz"}>
-        <CreateQuiz></CreateQuiz>
-      </CustomDialog>
+      {/* <CustomDialog open={open} setOpen={setOpen} title={"Create The Quiz"}>
+        <CreateQuiz open={openEditCard} setOpen={setOpenEditCard}></CreateQuiz>
+      </CustomDialog> */}
+{/* 
+       <CustomDialog open={openEditCard} setOpen={setOpenEditCard}>
+          <EditQuiz></EditQuiz>
+        </CustomDialog> */}
+
       <StyledBox sx={{ width: "40%" }} >
         <TextField
           id="input-with-icon-textfield"
