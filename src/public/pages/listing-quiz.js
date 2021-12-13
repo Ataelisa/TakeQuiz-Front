@@ -19,11 +19,14 @@ const ListingQuiz = ({ open, setOpen }) => {
     getListQuiz()
   )
 
+ 
   return (
     <>
       <CustomDialog open={open} setOpen={setOpen} title={"Create The Quiz"}>
         <CreateQuiz></CreateQuiz>
-      </CustomDialog>
+      </CustomDialog> 
+
+
       <StyledBox sx={{ width: "40%" }} >
         <TextField
           id="input-with-icon-textfield"
@@ -47,7 +50,7 @@ const ListingQuiz = ({ open, setOpen }) => {
         >
           {Array.from(Array(9)).map((_, index) => (
             <Grid item xs={2} sm={3} md={3} key={index}>
-              <QuizCard title={`card ${index}`}></QuizCard>
+              <QuizCard></QuizCard>
             </Grid>
           ))}
         </Grid>
