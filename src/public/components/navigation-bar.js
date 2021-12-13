@@ -5,10 +5,18 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import QuizIcon from "@mui/icons-material/Quiz";
-import useStyles from "../style";
+import { styled } from "@mui/system";
 
+const StyledIconButton = styled(IconButton)({
+  background: "white",
+    "&:hover": {
+      backgroundColor: "white",
+    }
+})
+const StyledQuizIcon = styled(QuizIcon)({
+  color: "dodgerblue",
+})
 export default function NavigationBar({ setOpen, open }) {
-  const classes = useStyles();
   const showQuizForm = () => {
     if (open === false) {
       setOpen(true);
@@ -26,14 +34,13 @@ export default function NavigationBar({ setOpen, open }) {
           >
             TakeQuiz &hellip;
           </Typography>
-          <IconButton
+          <StyledIconButton
             title="add Quiz"
             sx={{ mr: 2 }}
-            className={classes.root}
             onClick={showQuizForm}
           >
-            <QuizIcon className={classes.quizIcon}></QuizIcon>
-          </IconButton>
+            <StyledQuizIcon></StyledQuizIcon>
+          </StyledIconButton>
         </Toolbar>
       </AppBar>
     </Box>
