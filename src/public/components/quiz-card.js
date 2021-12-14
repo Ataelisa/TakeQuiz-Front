@@ -11,7 +11,6 @@ import CustomDialog from './custom-dialog';
 import EditQuiz from './edit-quiz';
 import { styled } from "@mui/system";
 
-const QUIZ_S
 const StyledCardMedia = styled(CardMedia)({
   "objectFit": "contain",
   "background": 'beige',

@@ -6,3 +6,10 @@ export function getListQuiz() {
     .get(baseUrl)
     .then((response) => response.data)
 }
+
+export function postQuiz(quiz) {
+  return axios
+    .post(baseUrl, quiz)
+    .then((response) => response.data)
+}
+

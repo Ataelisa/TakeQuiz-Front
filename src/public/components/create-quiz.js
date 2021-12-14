@@ -1,10 +1,70 @@
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { styled } from "@mui/system";
 import React from "react";
 import { useForm } from "react-hook-form";
-export default function CreateQuiz() {
-  const { handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+import { postQuiz } from "../../_actions/quiz_actions";
 
+const StyledUploadButton = styled(Button)({
+  "width": "100%",
+  "background": 'dogerblue',
+})
+export default function CreateQuiz() {
+
+  const  methods = useForm({
+    defaultValues: {
+    
+    }
+  });
+
+  const {
+    control,
+    setValue,
+    register,
+    handleSubmit,
+    formState:{isSubmitting, errors},
+  } = methods
+ 
+  const onSubmit = (data) => {
+    postQuiz(data);
+    console.log(data) 
+  }
+  const themes = [
+    {
+      value: 1,
+      label: 'MATHS',
+    },
+    {
+      value: 2,
+      label: 'ART',
+    },
+    {
+      value:3,
+      label: 'SPORT',
+    },
+    {
+      value: 4,
+      label: 'PHYSICAL',
+    },
+  ];
+
+  const hiddenFileInput = React.useRef(null);
+  const handleChange = (event) => {
+    const fileUpload = event.target.files[0];
+    let reader = new FileReader();
+    reader.onloadend = ()=>{
+      var b64  = reader.result; 
+      console.log({b64})
+      setValue("image", b64)
+    }
+
+    reader.readAsDataURL(fileUpload);
+  }
+ 
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  console.log()
+
+  }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={1} mt={1} direction="column">
@@ -16,16 +76,25 @@ export default function CreateQuiz() {
                 type="text"
                 variant="outlined"
                 size="small"
+                {...register("name", {required: true})}
               />
+             
             </Grid>
             <Grid item xs>
               <TextField
                 label="theme"
-                type="text"
+                select
                 variant="outlined"
                 size="small"
                 fullWidth
-              />
+                {...register("theme")}
+              >
+                {themes.map((theme) => (
+                  <MenuItem key={theme.value} value={theme.value}>
+                    {theme.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
           </Grid>
         </Grid>
@@ -37,6 +106,7 @@ export default function CreateQuiz() {
               placeholder="Une description du Quiz ..."
               rows={4}
               fullWidth
+              {...register("description")}
             />
           </Grid>
         </Grid>
@@ -49,6 +119,7 @@ export default function CreateQuiz() {
                 variant="outlined"
                 size="small"
                 fullWidth
+                {...register("tag")}
               />
             </Grid>
           </Grid>
@@ -56,12 +127,16 @@ export default function CreateQuiz() {
         <Grid item>
           <Grid container spacing={3}>
             <Grid item xs>
-              <TextField
-                label="image"
-                type="text"
-                variant="outlined"
-                size="small"
-              />
+              <StyledUploadButton onClick={handleClick}>
+                 Upload File
+              </StyledUploadButton>
+              <input 
+               type="file"
+               ref={hiddenFileInput}
+               onChange={handleChange}
+               style={{display:'none'}}
+             
+               />
             </Grid>
             <Grid item xs>
               <TextField
