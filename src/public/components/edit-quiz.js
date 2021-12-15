@@ -1,7 +1,13 @@
 import { Button, Grid, TextField } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
-export default function EditQuiz({handleChangeEditCard}) {
+import Icon from '@mui/material/Icon';
+import Checkbox from '@mui/material/Checkbox';
+import AddShoppingCartIcon from '@mui/icons-material/AddCircleOutline';
+import IconButton from '@mui/material/IconButton';
+import { AddCircleOutline } from "@mui/icons-material";
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+export default function EditQuiz() {
   const { handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
 
@@ -40,7 +46,52 @@ export default function EditQuiz({handleChangeEditCard}) {
             />
           </Grid>
         </Grid>
-       
+        <Grid item>
+          <Grid container>
+            <h1>Question</h1>
+            <IconButton color="primary" aria-label="add question">
+            <AddCircleOutline />
+          </IconButton>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container>
+            <TextField
+              label=""
+              type="text"
+              variant="outlined"
+              size="small"
+              fullWidth
+            />
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container>
+          <Checkbox {...label} />
+            <TextField
+              label="Reponse"
+              type="text"
+              variant="outlined"
+              size="small"
+              focus={{outline:"none"}}
+              
+            />
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container  spacing={3}>
+          <Grid item xs>
+          <IconButton color="primary" aria-label="add reponse">
+            <AddCircleOutline />
+          </IconButton>
+          </Grid>
+          <Grid item xs>
+          <Button variant="contained" size="small" fullWidth type="submit" >
+                Save
+              </Button>
+          </Grid>
+          </Grid>
+        </Grid>
         <Grid item>
         <Grid container spacing={3}>
             <Grid item xs>
@@ -49,7 +100,7 @@ export default function EditQuiz({handleChangeEditCard}) {
               </Button>
               </Grid>
               <Grid item xs>
-              <Button variant="contained" size="small" fullWidth  onClick={handleChangeEditCard}>
+              <Button variant="contained" size="small" fullWidth type="submit">
                 Exit
               </Button>
               </Grid>

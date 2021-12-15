@@ -12,13 +12,11 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-export default function ListMenu({handleChangeEditCard }) {
+export default function LongMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget.value);
-   // setOpen(true);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -52,7 +50,7 @@ export default function ListMenu({handleChangeEditCard }) {
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option}  onClick={handleChangeEditCard}>
+          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
             {option}
           </MenuItem>
         ))}

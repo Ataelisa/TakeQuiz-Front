@@ -2,31 +2,23 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import QuizCard from "../components/quiz-card";
-import { CircularProgress, InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CustomDialog from "../components/custom-dialog";
 import CreateQuiz from "../components/create-quiz";
 import { styled } from "@mui/system";
-import { getListQuiz } from "../../_actions/quiz_actions";
-import useSWR from "swr";
+
 
 const StyledBox = styled(Box)({
   marginLeft: "30%",
   marginRight: "30%",
 })
 const ListingQuiz = ({ open, setOpen }) => {
-  const { data: somethings} = useSWR( 'allQuiz',() =>
-    getListQuiz()
-  )
- if(!somethings) {
-   return <CircularProgress></CircularProgress>
- }
   return (
     <>
       <CustomDialog open={open} setOpen={setOpen} title={"Create The Quiz"}>
         <CreateQuiz></CreateQuiz>
-      </CustomDialog> 
-
+      </CustomDialog>
       <StyledBox sx={{ width: "40%" }} >
         <TextField
           id="input-with-icon-textfield"
@@ -48,9 +40,9 @@ const ListingQuiz = ({ open, setOpen }) => {
           spacing={{ xs: 3, md: 8 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {somethings.map((quiz, index) => (
+          {Array.from(Array(9)).map((_, index) => (
             <Grid item xs={2} sm={3} md={3} key={index}>
-              <QuizCard quiz={quiz}></QuizCard>
+              <QuizCard title={`card ${index}`}></QuizCard>
             </Grid>
           ))}
         </Grid>
