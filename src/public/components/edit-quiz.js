@@ -1,5 +1,5 @@
 import { Button, Grid, TextField } from "@mui/material";
-import React from "react";
+import React, { Suspense } from "react";
 import { useForm } from "react-hook-form";
 import Icon from '@mui/material/Icon';
 import Checkbox from '@mui/material/Checkbox';
@@ -7,13 +7,18 @@ import AddShoppingCartIcon from '@mui/icons-material/AddCircleOutline';
 import IconButton from '@mui/material/IconButton';
 import { AddCircleOutline } from "@mui/icons-material";
 import ReponseList from "./reponse-list";
-
-function sayHello() {
-  alert('Hello!');
-}
+import { useState } from 'react'; 
+//import { Button } from './Button.js'; 
+import { ListComponent } from './ListComponent.js'; 
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 export default function EditQuiz() {
+  const [components, setComponents] = useState(["Sample Component"]); 
+  
+  function addComponent() { 
+    
+    setComponents([...components, "Sample Component"]) 
+  }
   const { handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
 
@@ -84,12 +89,13 @@ export default function EditQuiz() {
             />
           </Grid>
         </Grid> */}
-        
+        {components.map((item, i) => ( <ReponseList /> ))}
         <Grid item>
           <Grid container  spacing={3}>
           <Grid item xs>
+          
           <IconButton color="primary" aria-label="add reponse">
-            <AddCircleOutline onClick={sayHello}/>
+            <AddCircleOutline onClick={addComponent}/>
           </IconButton>
           </Grid>
           <Grid item xs>
@@ -117,3 +123,8 @@ export default function EditQuiz() {
     </form>
   );
 }
+
+
+
+
+
