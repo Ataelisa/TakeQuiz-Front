@@ -6,6 +6,12 @@ import Checkbox from '@mui/material/Checkbox';
 import AddShoppingCartIcon from '@mui/icons-material/AddCircleOutline';
 import IconButton from '@mui/material/IconButton';
 import { AddCircleOutline } from "@mui/icons-material";
+import ReponseList from "./reponse-list";
+
+function sayHello() {
+  alert('Hello!');
+}
+
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 export default function EditQuiz() {
   const { handleSubmit } = useForm();
@@ -65,7 +71,7 @@ export default function EditQuiz() {
             />
           </Grid>
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <Grid container>
           <Checkbox {...label} />
             <TextField
@@ -77,12 +83,13 @@ export default function EditQuiz() {
               
             />
           </Grid>
-        </Grid>
+        </Grid> */}
+        
         <Grid item>
           <Grid container  spacing={3}>
           <Grid item xs>
           <IconButton color="primary" aria-label="add reponse">
-            <AddCircleOutline />
+            <AddCircleOutline onClick={sayHello}/>
           </IconButton>
           </Grid>
           <Grid item xs>
