@@ -13,19 +13,19 @@ import useSWR from "swr";
 const StyledBox = styled(Box)({
   marginLeft: "30%",
   marginRight: "30%",
-})
+});
 const ListingQuiz = ({ open, setOpen }) => {
-  const {data: allQquiz} = useSWR("allQuiz", () => getListQuiz());
-  
-  if(!allQquiz) {
-    return <CircularProgress></CircularProgress>
+  const { data: allQquiz } = useSWR("allQuiz", () => getListQuiz());
+
+  if (!allQquiz) {
+    return <CircularProgress></CircularProgress>;
   }
   return (
     <>
       <CustomDialog open={open} setOpen={setOpen} title={"Create The Quiz"}>
-        <CreateQuiz></CreateQuiz>
+        <CreateQuiz setOpen={setOpen}></CreateQuiz>
       </CustomDialog>
-      <StyledBox sx={{ width: "40%" }} >
+      <StyledBox sx={{ width: "40%" }}>
         <TextField
           id="input-with-icon-textfield"
           InputProps={{

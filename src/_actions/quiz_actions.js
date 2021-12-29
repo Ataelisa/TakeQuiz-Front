@@ -6,5 +6,8 @@ export function getListQuiz() {
 }
 
 export function postQuiz(quiz) {
-  return axios.post(baseUrl, quiz).then((response) => response.data);
+  return axios
+    .post(baseUrl, quiz)
+    .then((response) => response.data)
+    .catch((error) => console.log());
 }

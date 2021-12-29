@@ -5,15 +5,12 @@ import { useForm } from "react-hook-form";
 import { postQuiz } from "../../_actions/quiz_actions";
 
 const StyledUploadButton = styled(Button)({
-  "width": "100%",
-  "background": 'dogerblue',
-})
-export default function CreateQuiz() {
-
-  const  methods = useForm({
-    defaultValues: {
-    
-    }
+  width: "100%",
+  color: "white",
+});
+export default function CreateQuiz({ setOpen }) {
+  const methods = useForm({
+    defaultValues: {},
   });
 
   const {
@@ -21,29 +18,29 @@ export default function CreateQuiz() {
     setValue,
     register,
     handleSubmit,
-    formState:{isSubmitting, errors},
-  } = methods
- 
+    formState: { isSubmitting, errors },
+  } = methods;
+
   const onSubmit = (data) => {
     postQuiz(data);
-    console.log(data) 
-  }
+    setOpen(false);
+  };
   const themes = [
     {
       value: 1,
-      label: 'MATHS',
+      label: "MATHS",
     },
     {
       value: 2,
-      label: 'ART',
+      label: "ART",
     },
     {
-      value:3,
-      label: 'SPORT',
+      value: 3,
+      label: "SPORT",
     },
     {
       value: 4,
-      label: 'PHYSICAL',
+      label: "PHYSICAL",
     },
   ];
 
@@ -51,20 +48,18 @@ export default function CreateQuiz() {
   const handleChange = (event) => {
     const fileUpload = event.target.files[0];
     let reader = new FileReader();
-    reader.onloadend = ()=>{
-      var b64  = reader.result; 
-      console.log({b64})
-      setValue("image", b64)
-    }
+    reader.onloadend = () => {
+      var b64 = reader.result;
+      console.log({ b64 });
+      setValue("image", b64);
+    };
 
     reader.readAsDataURL(fileUpload);
-  }
- 
+  };
+
   const handleClick = (event) => {
     hiddenFileInput.current.click();
-  console.log()
-
-  }
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={1} mt={1} direction="column">
@@ -76,9 +71,8 @@ export default function CreateQuiz() {
                 type="text"
                 variant="outlined"
                 size="small"
-                {...register("name", {required: true})}
+                {...register("name", { required: true })}
               />
-             
             </Grid>
             <Grid item xs>
               <TextField
@@ -127,16 +121,15 @@ export default function CreateQuiz() {
         <Grid item>
           <Grid container spacing={3}>
             <Grid item xs>
-              <StyledUploadButton onClick={handleClick}>
-                 Upload File
+              <StyledUploadButton onClick={handleClick} variant="contained">
+                Upload File
               </StyledUploadButton>
-              <input 
-               type="file"
-               ref={hiddenFileInput}
-               onChange={handleChange}
-               style={{display:'none'}}
-             
-               />
+              <input
+                type="file"
+                ref={hiddenFileInput}
+                onChange={handleChange}
+                style={{ display: "none" }}
+              />
             </Grid>
             <Grid item xs>
               <TextField
