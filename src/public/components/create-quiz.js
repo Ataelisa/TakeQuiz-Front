@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { postQuiz } from "../../_actions/quiz_actions";
+import { themes } from "../../constantes/theme";
 
 const StyledUploadButton = styled(Button)({
   width: "100%",
@@ -25,24 +26,6 @@ export default function CreateQuiz({ setOpen }) {
     postQuiz(data);
     setOpen(false);
   };
-  const themes = [
-    {
-      value: 1,
-      label: "MATHS",
-    },
-    {
-      value: 2,
-      label: "ART",
-    },
-    {
-      value: 3,
-      label: "SPORT",
-    },
-    {
-      value: 4,
-      label: "PHYSICAL",
-    },
-  ];
 
   const hiddenFileInput = React.useRef(null);
   const handleChange = (event) => {
