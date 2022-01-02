@@ -80,9 +80,21 @@
       "text": "Quel est le personnage principal",
       "quizId": 2,
       "answers": [
-        { "id": 1111, "text": "Satoru Gojo", "isCorrect": false },
-        { "id": 2222, "text": "Yuji Itadori", "isCorrect": true },
-        { "id": 3333, "text": "Nobara Kugisaki", "isCorrect": false }
+        {
+          "id": 1111,
+          "text": "Satoru Gojo",
+          "isCorrect": false
+        },
+        {
+          "id": 2222,
+          "text": "Yuji Itadori",
+          "isCorrect": true
+        },
+        {
+          "id": 3333,
+          "text": "Nobara Kugisaki",
+          "isCorrect": false
+        }
       ]
     },
     {

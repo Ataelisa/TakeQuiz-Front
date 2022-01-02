@@ -18,3 +18,10 @@ export function getQuizQuestions(quizId) {
 
   return dataPromise;
 }
+
+export function patchQuiz(quiz) {
+  const promise = axios.patch(baseUrl + `/${quiz.id}`, quiz);
+  const dataPromise = promise.then((response) => response.data);
+
+  return dataPromise;
+}

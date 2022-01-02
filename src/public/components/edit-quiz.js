@@ -6,7 +6,7 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { themes } from "../../constantes/theme";
 
 import useSWR from "swr";
-import { getQuizQuestions } from "../../_actions/quiz_actions";
+import { getQuizQuestions, patchQuiz } from "../../_actions/quiz_actions";
 import Question from "./Question";
 
 export default function EditQuiz({ quiz }) {
@@ -18,25 +18,28 @@ export default function EditQuiz({ quiz }) {
       .catch((error) => console.log(error));
   }, []);
 
-  const onSubmit = (data) => {
-    console.log("here");
-  };
-
   const methods = useForm({
     defaultValues: {
+      id: quiz.id,
       name: quiz.name,
       theme: quiz.theme,
       description: quiz.description,
+      status: quiz.status,
     },
   });
 
   const {
-    control,
-    setValue,
     register,
     handleSubmit,
+    getValues,
     formState: { isSubmitting, errors },
   } = methods;
+
+  const onSubmit = () => {
+    patchQuiz(getValues())
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+  };
 
   const addNewQuestionField = () => {
     let questions = [...quizQuestions];
@@ -45,13 +48,42 @@ export default function EditQuiz({ quiz }) {
       text: "",
       maxError: false,
       msgError: "",
-      answers: [{ id: Date.now() / Math.random(), text: "", isCorrect: false }],
+      answers: [],
     });
     setQuizQuestions(questions);
   };
 
+  const addNewAnswerField = (id) => {
+    let indexQuestion = quizQuestions.findIndex((q) => q.id === id);
+    const question = quizQuestions[indexQuestion];
+
+    question.answers.push({
+      id: Date.now() / Math.random(),
+      text: "",
+      isCorrect: false,
+    });
+
+    let questions = [...quizQuestions];
+    questions[indexQuestion] = question;
+    setQuizQuestions(questions);
+  };
+
+  const handleCorrectAnswer = (questionId, answerId) => {
+    let indexQuestion = quizQuestions.findIndex(
+      (q) => q.id.toString() === questionId.toString()
+    );
+    let question = quizQuestions[indexQuestion];
+    let indexAnswer = question.answers.findIndex(
+      (a) => a.id.toString() === answerId.toString()
+    );
+    question.answers[indexAnswer].isCorrect = !question.answers[indexAnswer]
+      .isCorrect;
+    let questions = [...quizQuestions];
+    questions[indexQuestion] = question;
+    setQuizQuestions(questions);
+  };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <Grid container spacing={1} mt={1} direction="column">
         <Grid item>
           <Grid container spacing={3}>
@@ -94,6 +126,25 @@ export default function EditQuiz({ quiz }) {
             />
           </Grid>
         </Grid>
+        <Grid item xs>
+          <Box
+            sx={{
+              width: "25%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              variant="contained"
+              size="small"
+              fullWidth
+              onClick={onSubmit}
+            >
+              Save
+            </Button>
+          </Box>
+        </Grid>
         <Grid item>
           <Box
             sx={{
@@ -112,7 +163,12 @@ export default function EditQuiz({ quiz }) {
           </Box>
         </Grid>
         {quizQuestions.map((question, index) => (
-          <Question question={question} key={index}></Question>
+          <Question
+            question={question}
+            key={index}
+            addNewAnswerField={addNewAnswerField}
+            handleCorrectAnswer={handleCorrectAnswer}
+          ></Question>
         ))}
         <Grid item>
           <Grid container spacing={3}>
@@ -121,14 +177,10 @@ export default function EditQuiz({ quiz }) {
                 Finish
               </Button>
             </Grid>
+
             <Grid item xs>
               <Button variant="contained" size="small" fullWidth type="submit">
-                Exit
-              </Button>
-            </Grid>
-            <Grid item xs>
-              <Button variant="contained" size="small" fullWidth type="submit">
-                Save
+                Save as Draft
               </Button>
             </Grid>
           </Grid>

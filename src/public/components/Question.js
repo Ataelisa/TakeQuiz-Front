@@ -1,9 +1,12 @@
 import { AddCircleOutline } from "@mui/icons-material";
 import { Box, Checkbox, Grid, IconButton, TextField } from "@mui/material";
-import ReponseList from "./reponse-list";
 import React from "react";
 
-export default function Question({ question }) {
+export default function Question({
+  question,
+  addNewAnswerField,
+  handleCorrectAnswer,
+}) {
   return (
     <>
       <Grid item>
@@ -20,7 +23,10 @@ export default function Question({ question }) {
         <Grid container>
           {question.answers.map((answer, index) => (
             <Box mt={2} key={answer.id}>
-              <Checkbox checked={answer.isCorrect} />
+              <Checkbox
+                checked={answer.isCorrect}
+                onClick={() => handleCorrectAnswer(question.id, answer.id)}
+              />
               <TextField
                 type="text"
                 variant="outlined"
@@ -31,7 +37,11 @@ export default function Question({ question }) {
             </Box>
           ))}
           <Grid item xs={12}>
-            <IconButton color="primary" title="add response">
+            <IconButton
+              color="primary"
+              title="add response"
+              onClick={() => addNewAnswerField(question.id)}
+            >
               <AddCircleOutline />
             </IconButton>
           </Grid>
