@@ -11,6 +11,7 @@ import EditQuiz from "../components/edit-quiz";
 import { styled } from "@mui/system";
 import { Status, themes } from "../../constantes/theme";
 import { Button } from "@mui/material";
+import CustomDialog from "./custom-dialog";
 
 const StyledCardMedia = styled(CardMedia)({
   objectFit: "contain",
@@ -38,35 +39,49 @@ export default function QuizCard({ quiz }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        action={
-          quiz.status === 1 ? (
-            <Button variant="outlined" size="small">
-              {"Edit"}
-            </Button>
-          ) : (
-            <Button variant="outlined" size="small">
-              {"Play"}
-            </Button>
-          )
-        }
-        title={quiz.name}
-        subheader={subHederText()}
-      />
+    // edit card
+    <>
+      <CustomDialog
+        open={openEditCard}
+        setOpen={setOpenEditCard}
+        title={"Edit The Quiz"}
+      >
+        <EditQuiz quiz={quiz}></EditQuiz>
+      </CustomDialog>
+      <Card sx={{ maxWidth: 345 }}>
+        <CardHeader
+          action={
+            quiz.status === 1 ? (
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => setOpenEditCard(true)}
+              >
+                {"Edit"}
+              </Button>
+            ) : (
+              <Button variant="outlined" size="small">
+                {"Play"}
+              </Button>
+            )
+          }
+          title={quiz.name}
+          subheader={subHederText()}
+        />
 
-      <StyledCardMedia
-        component="img"
-        height="194"
-        image={quiz.image}
-        alt="quiz image"
-      />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {quiz.description}
-        </Typography>
-      </CardContent>
-      <CardActions>{quizTags()}</CardActions>
-    </Card>
+        <StyledCardMedia
+          component="img"
+          height="194"
+          image={quiz.image}
+          alt="quiz image"
+        />
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            {quiz.description}
+          </Typography>
+        </CardContent>
+        <CardActions>{quizTags()}</CardActions>
+      </Card>
+    </>
   );
 }
