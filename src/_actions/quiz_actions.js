@@ -9,5 +9,12 @@ export function postQuiz(quiz) {
   return axios
     .post(baseUrl, quiz)
     .then((response) => response.data)
-    .catch((error) => console.log());
+    .catch((error) => console.log(error));
+}
+
+export function getQuizQuestions(quizId) {
+  const promise = axios.get(baseUrl + `/${quizId}/questions`);
+  const dataPromise = promise.then((response) => response.data);
+
+  return dataPromise;
 }

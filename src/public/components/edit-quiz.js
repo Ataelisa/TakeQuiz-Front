@@ -1,25 +1,22 @@
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
-import React, { Suspense } from "react";
+import { Box, Button, Grid, MenuItem, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Icon from "@mui/material/Icon";
-import Checkbox from "@mui/material/Checkbox";
-import AddShoppingCartIcon from "@mui/icons-material/AddCircleOutline";
 import IconButton from "@mui/material/IconButton";
 import { AddCircleOutline } from "@mui/icons-material";
-import ReponseList from "./reponse-list";
-import { useState } from "react";
 import { themes } from "../../constantes/theme";
 
-//import { Button } from './Button.js';
-import { ListComponent } from "./ListComponent.js";
+import useSWR from "swr";
+import { getQuizQuestions } from "../../_actions/quiz_actions";
+import Question from "./Question";
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 export default function EditQuiz({ quiz }) {
-  const [components, setComponents] = useState(["Sample Component"]);
+  const [quizQuestions, setQuizQuestions] = useState([]);
 
-  function addComponent() {
-    setComponents([...components, "Sample Component"]);
-  }
+  useEffect(() => {
+    getQuizQuestions(quiz.id)
+      .then((questions) => setQuizQuestions(questions))
+      .catch((error) => console.log(error));
+  }, []);
 
   const onSubmit = (data) => {
     console.log("here");
@@ -40,6 +37,18 @@ export default function EditQuiz({ quiz }) {
     handleSubmit,
     formState: { isSubmitting, errors },
   } = methods;
+
+  const addNewQuestionField = () => {
+    let questions = [...quizQuestions];
+    questions.push({
+      id: Date.now() / Math.random(),
+      text: "",
+      maxError: false,
+      msgError: "",
+      answers: [{ id: Date.now() / Math.random(), text: "", isCorrect: false }],
+    });
+    setQuizQuestions(questions);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -86,36 +95,25 @@ export default function EditQuiz({ quiz }) {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container>
-            <h1>Question</h1>
-            <IconButton color="primary" aria-label="add question">
-              <AddCircleOutline />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <h1>Questions</h1>
+            <IconButton
+              color="primary"
+              title="add question"
+              onClick={addNewQuestionField}
+            >
+              <AddCircleOutline fontSize="large" />
             </IconButton>
-          </Grid>
+          </Box>
         </Grid>
-        <Grid item>
-          <Grid container>
-            <TextField
-              label=""
-              type="text"
-              variant="outlined"
-              size="small"
-              fullWidth
-            />
-          </Grid>
-        </Grid>
-        {components.map((item, i) => (
-          <ReponseList />
+        {quizQuestions.map((question, index) => (
+          <Question question={question} key={index}></Question>
         ))}
-        <Grid item>
-          <Grid container spacing={3}>
-            <Grid item xs>
-              <IconButton color="primary" aria-label="add reponse">
-                <AddCircleOutline onClick={addComponent} />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Grid>
         <Grid item>
           <Grid container spacing={3}>
             <Grid item xs>
