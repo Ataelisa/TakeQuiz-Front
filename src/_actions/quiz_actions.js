@@ -25,3 +25,17 @@ export function patchQuiz(quiz) {
 
   return dataPromise;
 }
+
+export function putQuestions(questions, quizId) {
+  const promise = axios.put(baseUrl + `/${quizId}/questions`, questions);
+  const dataPromise = promise.then((response) => response.data);
+
+  return dataPromise;
+}
+
+export function patchStatus(quizId) {
+  const promise = axios.patch(baseUrl + `/${quizId}`);
+  const dataPromise = promise.then((response) => response.data);
+
+  return dataPromise;
+}

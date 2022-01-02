@@ -46,7 +46,7 @@ export default function QuizCard({ quiz }) {
         setOpen={setOpenEditCard}
         title={"Edit The Quiz"}
       >
-        <EditQuiz quiz={quiz}></EditQuiz>
+        <EditQuiz quiz={quiz} setOpen={setOpenEditCard}></EditQuiz>
       </CustomDialog>
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader

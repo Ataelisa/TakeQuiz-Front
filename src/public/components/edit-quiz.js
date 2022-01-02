@@ -6,10 +6,15 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { themes } from "../../constantes/theme";
 
 import useSWR from "swr";
-import { getQuizQuestions, patchQuiz } from "../../_actions/quiz_actions";
+import {
+  getQuizQuestions,
+  patchQuiz,
+  putQuestions,
+  patchStatus,
+} from "../../_actions/quiz_actions";
 import Question from "./Question";
 
-export default function EditQuiz({ quiz }) {
+export default function EditQuiz({ quiz, setOpen }) {
   const [quizQuestions, setQuizQuestions] = useState([]);
 
   useEffect(() => {
@@ -30,8 +35,8 @@ export default function EditQuiz({ quiz }) {
 
   const {
     register,
-    handleSubmit,
     getValues,
+    reset,
     formState: { isSubmitting, errors },
   } = methods;
 
@@ -81,6 +86,20 @@ export default function EditQuiz({ quiz }) {
     let questions = [...quizQuestions];
     questions[indexQuestion] = question;
     setQuizQuestions(questions);
+  };
+
+  const saveDraft = () => {
+    putQuestions(quizQuestions, quiz.id)
+      .then((response) => console.log("ok"))
+      .catch((error) => console.log(error));
+  };
+  const saveQuiz = () => {
+    patchStatus(quiz.id).then((sucess) => {
+      if (sucess) {
+        setOpen(false);
+        reset();
+      }
+    });
   };
   return (
     <form>
@@ -173,13 +192,23 @@ export default function EditQuiz({ quiz }) {
         <Grid item>
           <Grid container spacing={3}>
             <Grid item xs>
-              <Button variant="contained" size="small" fullWidth type="submit">
+              <Button
+                variant="contained"
+                size="small"
+                fullWidth
+                onClick={() => saveQuiz()}
+              >
                 Finish
               </Button>
             </Grid>
 
             <Grid item xs>
-              <Button variant="contained" size="small" fullWidth type="submit">
+              <Button
+                variant="contained"
+                size="small"
+                fullWidth
+                onClick={saveDraft}
+              >
                 Save as Draft
               </Button>
             </Grid>
