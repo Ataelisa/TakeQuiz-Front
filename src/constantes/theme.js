@@ -19,6 +19,10 @@ export const themes = [
     value: 5,
     label: "Anime",
   },
+  {
+    value: 6,
+    label: "Mangas",
+  },
 ];
 
 export const Status = [

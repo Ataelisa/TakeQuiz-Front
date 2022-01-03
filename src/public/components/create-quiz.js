@@ -15,7 +15,6 @@ export default function CreateQuiz({ setOpen }) {
   });
 
   const {
-    control,
     setValue,
     register,
     handleSubmit,
@@ -121,6 +120,7 @@ export default function CreateQuiz({ setOpen }) {
                 variant="outlined"
                 size="small"
                 fullWidth
+                {...register("quizPassword")}
               />
             </Grid>
           </Grid>

@@ -6,15 +6,16 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import QuizIcon from "@mui/icons-material/Quiz";
 import { styled } from "@mui/system";
+import { Button } from "@mui/material";
 
-const StyledIconButton = styled(IconButton)({
-  background: "white",
+const StyledButton = styled(Button)({
+  background: "#F9F3EA",
     "&:hover": {
-      backgroundColor: "white",
+      backgroundColor: "#F9F3EA",
     }
 })
-const StyledQuizIcon = styled(QuizIcon)({
-  color: "dodgerblue",
+const StyledAppBar = styled(AppBar)({
+  height: "52px"
 })
 export default function NavigationBar({ setOpen, open }) {
   const showQuizForm = () => {
@@ -24,7 +25,7 @@ export default function NavigationBar({ setOpen, open }) {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <StyledAppBar position="static">
         <Toolbar>
           <Typography
             variant="h6"
@@ -34,15 +35,22 @@ export default function NavigationBar({ setOpen, open }) {
           >
             TakeQuiz &hellip;
           </Typography>
-          <StyledIconButton
+          {/* <StyledIconButton
             title="add Quiz"
             sx={{ mr: 2 }}
             onClick={showQuizForm}
           >
             <StyledQuizIcon></StyledQuizIcon>
-          </StyledIconButton>
+          </StyledIconButton> */}
+           <StyledButton
+                variant="outlined"
+                size="small"
+                onClick={showQuizForm}
+              >
+                {"Create Quiz"}
+              </StyledButton>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
     </Box>
   );
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = " http://localhost:3000/quiz"; //'https://localhost:44315/Quiz'
+const baseUrl = "https://localhost:44315/Quiz";
+const JsonServeur = "http://localhost:3000/quiz";
 
 export function getListQuiz() {
   return axios.get(baseUrl).then((response) => response.data);
