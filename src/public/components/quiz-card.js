@@ -6,12 +6,12 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
-import ListMenu from "../components/List-Menu";
 import EditQuiz from "../components/edit-quiz";
 import { styled } from "@mui/system";
 import { Status, themes } from "../../constantes/theme";
 import { Button } from "@mui/material";
 import CustomDialog from "./custom-dialog";
+import QuizTest from "./QuizTest";
 
 const StyledCardMedia = styled(CardMedia)({
   objectFit: "contain",
@@ -19,10 +19,7 @@ const StyledCardMedia = styled(CardMedia)({
 });
 export default function QuizCard({ quiz }) {
   const [openEditCard, setOpenEditCard] = React.useState(false);
-
-  const handleChangeEditCard = () => {
-    setOpenEditCard(!openEditCard);
-  };
+  const [openPlayQuizDialog, setOpenPlayQuizDialog] = React.useState(false);
 
   const subHederText = () => {
     const theme = themes.find((theme) => theme.value === quiz.theme).label;
@@ -39,14 +36,23 @@ export default function QuizCard({ quiz }) {
   };
 
   return (
-    // edit card
     <>
+      {/* edit card */}
       <CustomDialog
         open={openEditCard}
         setOpen={setOpenEditCard}
         title={"Edit The Quiz"}
       >
         <EditQuiz quiz={quiz} setOpen={setOpenEditCard}></EditQuiz>
+      </CustomDialog>
+
+      {/* Play Quiz */}
+      <CustomDialog
+        open={openPlayQuizDialog}
+        setOpen={setOpenPlayQuizDialog}
+        title={"Take The Quiz"}
+      >
+        <QuizTest id={quiz.id}></QuizTest>
       </CustomDialog>
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
@@ -60,7 +66,11 @@ export default function QuizCard({ quiz }) {
                 {"Edit"}
               </Button>
             ) : (
-              <Button variant="outlined" size="small">
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => setOpenPlayQuizDialog(true)}
+              >
                 {"Play"}
               </Button>
             )

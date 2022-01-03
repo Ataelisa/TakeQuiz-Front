@@ -39,3 +39,10 @@ export function patchStatus(quizId) {
 
   return dataPromise;
 }
+
+export function postEvaluteQuiz(quizId, questions) {
+  const promise = axios.post(baseUrl + `/${quizId}/evaluate`, questions);
+  const dataPromise = promise.then((response) => response.data);
+
+  return dataPromise;
+}
