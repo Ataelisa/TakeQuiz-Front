@@ -17,7 +17,7 @@ const StyledCardMedia = styled(CardMedia)({
   objectFit: "contain",
   background: "beige",
 });
-export default function QuizCard({ quiz }) {
+export default function QuizCard({ quiz, loadQuizData }) {
   const [openEditCard, setOpenEditCard] = React.useState(false);
   const [openPlayQuizDialog, setOpenPlayQuizDialog] = React.useState(false);
 
@@ -43,7 +43,7 @@ export default function QuizCard({ quiz }) {
         setOpen={setOpenEditCard}
         title={"Edit The Quiz"}
       >
-        <EditQuiz quiz={quiz} setOpen={setOpenEditCard}></EditQuiz>
+        <EditQuiz quiz={quiz} setOpen={setOpenEditCard} loadQuizData={loadQuizData}></EditQuiz>
       </CustomDialog>
 
       {/* Play Quiz */}

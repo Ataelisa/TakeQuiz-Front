@@ -22,8 +22,8 @@ export function getQuizQuestions(quizId) {
   return dataPromise;
 }
 
-export function patchQuiz(quiz) {
-  const promise = axios.patch(baseUrl + `/${quiz.id}`, quiz);
+export function patchQuiz(quizId, quiz) {
+  const promise = axios.patch(baseUrl + `/${quizId}`, quiz);
   const dataPromise = promise.then((response) => response.data);
 
   return dataPromise;

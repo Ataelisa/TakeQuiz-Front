@@ -59,7 +59,7 @@ const ListingQuiz = ({ open, setOpen }) => {
         >
           {allQuiz.map((quiz, index) => (
             <Grid item xs={2} sm={3} md={3} key={index}>
-              <QuizCard quiz={quiz}></QuizCard>
+              <QuizCard quiz={quiz} loadQuizData={loadQuizData}></QuizCard>
             </Grid>
           ))}
         </Grid>

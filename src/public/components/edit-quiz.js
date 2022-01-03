@@ -14,22 +14,21 @@ import {
 } from "../../_actions/quiz_actions";
 import Question from "./Question";
 
-export default function EditQuiz({ quiz, setOpen }) {
+export default function EditQuiz({ quiz, setOpen, loadQuizData }) {
   const [quizQuestions, setQuizQuestions] = useState([]);
 
   useEffect(() => {
-    getQuizQuestions(quiz.id)
-      .then((questions) => setQuizQuestions(questions))
-      .catch((error) => console.log(error));
+    // getQuizQuestions(quiz.id)
+    //   .then((questions) => setQuizQuestions(questions))
+    //   .catch((error) => console.log(error));
+    setQuizQuestions([])
   }, []);
 
   const methods = useForm({
     defaultValues: {
-      id: quiz.id,
       name: quiz.name,
       theme: quiz.theme,
       description: quiz.description,
-      status: quiz.status,
     },
   });
 
@@ -41,8 +40,8 @@ export default function EditQuiz({ quiz, setOpen }) {
   } = methods;
 
   const onSubmit = () => {
-    patchQuiz(getValues())
-      .then((response) => console.log(response))
+    patchQuiz(quiz.id, getValues())
+      .then((data) => loadQuizData())
       .catch((error) => console.log(error));
   };
 
@@ -171,7 +170,7 @@ export default function EditQuiz({ quiz, setOpen }) {
               flexDirection: "row",
             }}
           >
-            <h1>Questions</h1>
+            <h4 style={{marginTop: "5px"}}>Questions</h4>
             <IconButton
               color="primary"
               title="add question"
