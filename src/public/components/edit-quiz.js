@@ -48,10 +48,9 @@ export default function EditQuiz({ quiz, setOpen, loadQuizData }) {
   const addNewQuestionField = () => {
     let questions = [...quizQuestions];
     questions.push({
-      id: Date.now() / Math.random(),
+      id: Date.now()/Math.random() ,
       text: "",
-      maxError: false,
-      msgError: "",
+      isNew: true,
       answers: [],
     });
     setQuizQuestions(questions);
@@ -62,9 +61,10 @@ export default function EditQuiz({ quiz, setOpen, loadQuizData }) {
     const question = quizQuestions[indexQuestion];
 
     question.answers.push({
-      id: Date.now() / Math.random(),
+      id: Date.now()/Math.random(),
       text: "",
       isCorrect: false,
+      isNew: true
     });
 
     let questions = [...quizQuestions];
@@ -87,9 +87,32 @@ export default function EditQuiz({ quiz, setOpen, loadQuizData }) {
     setQuizQuestions(questions);
   };
 
+  const  handlerQuestionChange = (event, questionId) =>{
+    let indexQuestion = quizQuestions.findIndex(question => question.id.toString() === questionId.toString());
+    const question = quizQuestions[indexQuestion];
+    question.text = event.target.value;
+
+    let questions = [...quizQuestions];
+    questions[indexQuestion] = question;
+    setQuizQuestions(questions);
+ }
+
+ const  handlerAnswerChange = (event, answerId, questionId) =>{
+  let indexQuestion = quizQuestions.findIndex(question => question.id.toString() === questionId.toString());
+  const question = quizQuestions[indexQuestion];
+  const answerIndex =  question.answers.findIndex(answer => answer.id.toString() === answerId.toString());
+
+  const answer =  question.answers[answerIndex];
+  answer.text = event.target.value;
+  question.answers[answerIndex] = answer;
+  
+  let questions = [...quizQuestions];
+  questions[indexQuestion] = question;
+  setQuizQuestions(questions);
+}
   const saveDraft = () => {
     putQuestions(quizQuestions, quiz.id)
-      .then((response) => console.log("ok"))
+      .then((success) => console.log("ok"))
       .catch((error) => console.log(error));
   };
   const saveQuiz = () => {
@@ -185,7 +208,9 @@ export default function EditQuiz({ quiz, setOpen, loadQuizData }) {
             question={question}
             key={index}
             addNewAnswerField={addNewAnswerField}
+            handlerAnswerChange = {handlerAnswerChange}
             handleCorrectAnswer={handleCorrectAnswer}
+            handlerQuestionChange = {handlerQuestionChange}
           ></Question>
         ))}
         <Grid item>

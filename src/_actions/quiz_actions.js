@@ -1,6 +1,9 @@
 import axios from "axios";
 const baseUrl = "https://localhost:44315/Quiz";
 const JsonServeur = "http://localhost:3000/quiz";
+const newQuestionId = "aaaaaaaa-1111-2222-bbbb-2c963f66afa6"
+const newAnswerId = "aaaaaaaa-2222-3333-cccc-2c963f66afa6"
+
 
 export function getListQuiz() {
   const promise = axios.get(baseUrl);
@@ -30,6 +33,17 @@ export function patchQuiz(quizId, quiz) {
 }
 
 export function putQuestions(questions, quizId) {
+
+  questions.forEach(question => {
+    if(question.isNew === true) {
+      question.id = newQuestionId;
+      question.answers.forEach(answer => {
+        if(answer.isNew) {
+          answer.id = newAnswerId;
+        }
+      })
+    }
+  });
   const promise = axios.put(baseUrl + `/${quizId}/questions`, questions);
   const dataPromise = promise.then((response) => response.data);
 
