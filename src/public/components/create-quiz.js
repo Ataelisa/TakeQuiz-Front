@@ -4,12 +4,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { postQuiz } from "../../_actions/quiz_actions";
 import { themes } from "../../constantes/theme";
+import { useRef } from "react";
 
 const StyledUploadButton = styled(Button)({
   width: "100%",
   color: "white",
 });
-export default function CreateQuiz({ setOpen }) {
+export default function CreateQuiz({ setOpen, loadQuizData }) {
+  const hiddenFileInput = useRef(null);
+
   const methods = useForm({
     defaultValues: {},
   });
@@ -22,11 +25,14 @@ export default function CreateQuiz({ setOpen }) {
   } = methods;
 
   const onSubmit = (data) => {
-    postQuiz(data);
-    setOpen(false);
+    postQuiz(data).then((quiz)=> {
+      setOpen(false);
+      loadQuizData()
+    })
+    .catch(error => console.log(error));
+   
   };
 
-  const hiddenFileInput = React.useRef(null);
   const handleChange = (event) => {
     const fileUpload = event.target.files[0];
     let reader = new FileReader();

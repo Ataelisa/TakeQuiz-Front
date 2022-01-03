@@ -3,14 +3,16 @@ const baseUrl = "https://localhost:44315/Quiz";
 const JsonServeur = "http://localhost:3000/quiz";
 
 export function getListQuiz() {
-  return axios.get(baseUrl).then((response) => response.data);
+  const promise = axios.get(baseUrl);
+  const dataPromise = promise.then( response => response.data);
+
+  return dataPromise
 }
 
 export function postQuiz(quiz) {
-  return axios
-    .post(baseUrl, quiz)
-    .then((response) => response.data)
-    .catch((error) => console.log(error));
+  const promise = axios.post(baseUrl, quiz);
+  const dataPromise = promise.then( response => response.data)
+  return dataPromise;
 }
 
 export function getQuizQuestions(quizId) {

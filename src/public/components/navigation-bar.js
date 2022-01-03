@@ -35,13 +35,7 @@ export default function NavigationBar({ setOpen, open }) {
           >
             TakeQuiz &hellip;
           </Typography>
-          {/* <StyledIconButton
-            title="add Quiz"
-            sx={{ mr: 2 }}
-            onClick={showQuizForm}
-          >
-            <StyledQuizIcon></StyledQuizIcon>
-          </StyledIconButton> */}
+
            <StyledButton
                 variant="outlined"
                 size="small"

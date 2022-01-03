@@ -8,22 +8,33 @@ import CustomDialog from "../components/custom-dialog";
 import CreateQuiz from "../components/create-quiz";
 import { styled } from "@mui/system";
 import { getListQuiz } from "../../_actions/quiz_actions";
-import useSWR from "swr";
+import { useEffect, useState } from "react";
 
 const StyledBox = styled(Box)({
   marginLeft: "30%",
   marginRight: "30%",
 });
 const ListingQuiz = ({ open, setOpen }) => {
-  const { data: allQquiz } = useSWR("allQuiz", () => getListQuiz());
+  const [allQuiz, setAllQuiz] = useState(null)
+  const [loadQuiz, setLoadQuiz] = useState(false)
 
-  if (!allQquiz) {
+  useEffect(()=> {
+    getListQuiz().then( quiz => {
+      setAllQuiz(quiz)
+    })
+  },[loadQuiz])
+  
+  const loadQuizData = () => {
+    setLoadQuiz(!loadQuiz)
+  }
+
+  if (!allQuiz) {
     return <CircularProgress></CircularProgress>;
   }
   return (
     <>
       <CustomDialog open={open} setOpen={setOpen} title={"Create The Quiz"}>
-        <CreateQuiz setOpen={setOpen}></CreateQuiz>
+        <CreateQuiz setOpen={setOpen} loadQuizData={loadQuizData}></CreateQuiz>
       </CustomDialog>
       <StyledBox sx={{ width: "40%" }}>
         <TextField
@@ -46,7 +57,7 @@ const ListingQuiz = ({ open, setOpen }) => {
           spacing={{ xs: 3, md: 8 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {allQquiz.map((quiz, index) => (
+          {allQuiz.map((quiz, index) => (
             <Grid item xs={2} sm={3} md={3} key={index}>
               <QuizCard quiz={quiz}></QuizCard>
             </Grid>
