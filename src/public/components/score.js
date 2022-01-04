@@ -3,27 +3,33 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 
 const commonStyles = {
   bgcolor: 'background.paper',
   m: 1,
   border: 1,
-  width: '13rem',
+  width: '60%',
   height: '13rem',
+  padding:"10px" ,
+  borderRadius: '20px'
 };
 
-export default function GutterlessList() {
+const winners = [
+  {score: 5, name: "Saad"},
+  {score: 4, name: "Julia"},
+  {score: 3, name: "Nouhaila"},
+  {score: 3, name: "Abdellah"},
+]
+export default function Score() {
   return (
    <Box>
-    
     <List component="form"
       sx={{
         '& > :not(style)': { m: 5, width: '100ch' },
       }}
       noValidate
       autoComplete="off"
-      sx={{ ...commonStyles, borderRadius: '20px',padding:"50px" }}>
+      sx={{ ...commonStyles}}>
       {[1, 2, 3, 4].map((value) => (
         <div>
         <ListItem
@@ -42,7 +48,7 @@ export default function GutterlessList() {
     </List>
     <br></br>
     <div align="right">
-    <TextField label="Score" color="secondary" focused disabled="false"/>
+    <p>Score: 5</p>
     <p>Félicitation ou désolé vous n'êtes pas classé</p>
     </div>
     </Box>

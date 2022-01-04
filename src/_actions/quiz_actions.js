@@ -25,6 +25,13 @@ export function getQuestionAnswers(quizId) {
   return dataPromise;
 }
 
+export function getQuizTestQuestions(quizId) {
+  const promise = axios.get(baseUrl + `/${quizId}/test-questions`);
+  const dataPromise = promise.then((response) => response.data);
+
+  return dataPromise;
+}
+
 export function patchQuiz(quizId, quiz) {
   const promise = axios.patch(baseUrl + `/${quizId}`, quiz);
   const dataPromise = promise.then((response) => response.data);

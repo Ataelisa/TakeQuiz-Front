@@ -12,6 +12,7 @@ import { Status, themes } from "../../constantes/theme";
 import { Button } from "@mui/material";
 import CustomDialog from "./custom-dialog";
 import QuizTest from "./QuizTest";
+import Score from "./score";
 
 const StyledCardMedia = styled(CardMedia)({
   objectFit: "contain",
@@ -20,6 +21,7 @@ const StyledCardMedia = styled(CardMedia)({
 export default function QuizCard({ quiz, loadQuizData }) {
   const [openEditCard, setOpenEditCard] = React.useState(false);
   const [openPlayQuizDialog, setOpenPlayQuizDialog] = React.useState(false);
+  const [showScore, setShowScore] = React.useState(false);
 
   const subHederText = () => {
     const theme = themes.find((theme) => theme.value === quiz.theme).label;
@@ -50,9 +52,18 @@ export default function QuizCard({ quiz, loadQuizData }) {
       <CustomDialog
         open={openPlayQuizDialog}
         setOpen={setOpenPlayQuizDialog}
-        title={"Take The Quiz"}
+        title={"Take The Quiz".concat(': ', quiz.name)}
       >
-        <QuizTest id={quiz.id}></QuizTest>
+        <QuizTest id={quiz.id} setShowScore={setShowScore} setOpenPlayQuizDialog={setOpenPlayQuizDialog}></QuizTest>
+      </CustomDialog>
+
+       {/* Quiz score */}
+       <CustomDialog
+        open={showScore}
+        setOpen={setShowScore}
+        title={"Score"}
+      >
+       <Score></Score>
       </CustomDialog>
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
