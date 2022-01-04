@@ -1,4 +1,4 @@
-import { getQuizQuestions } from "../../_actions/quiz_actions";
+import { getQuestionAnswers } from "../../_actions/quiz_actions";
 import React, { Component } from "react";
 import { Button } from "@mui/material";
 
@@ -23,7 +23,7 @@ class QuizTest extends Component {
   }
 
   componentDidMount = () => {
-    getQuizQuestions(this.props.id)
+    getQuestionAnswers(this.props.id)
       .then((response) => this.setState({ questions: response }))
       .catch((error) => console.log(error));
   };

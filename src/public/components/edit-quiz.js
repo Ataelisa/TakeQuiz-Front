@@ -7,9 +7,9 @@ import { themes } from "../../constantes/theme";
 
 import useSWR from "swr";
 import {
-  getQuizQuestions,
+  getQuestionAnswers,
   patchQuiz,
-  putQuestions,
+  postQuestions,
   patchStatus,
 } from "../../_actions/quiz_actions";
 import Question from "./Question";
@@ -18,9 +18,9 @@ export default function EditQuiz({ quiz, setOpen, loadQuizData }) {
   const [quizQuestions, setQuizQuestions] = useState([]);
 
   useEffect(() => {
-    // getQuizQuestions(quiz.id)
-    //   .then((questions) => setQuizQuestions(questions))
-    //   .catch((error) => console.log(error));
+    getQuestionAnswers(quiz.id)
+      .then((questions) => setQuizQuestions(questions))
+      .catch((error) => console.log(error));
     setQuizQuestions([])
   }, []);
 
@@ -111,17 +111,18 @@ export default function EditQuiz({ quiz, setOpen, loadQuizData }) {
   setQuizQuestions(questions);
 }
   const saveDraft = () => {
-    putQuestions(quizQuestions, quiz.id)
-      .then((success) => console.log("ok"))
+    postQuestions(quizQuestions, quiz.id, 0)
+    .then((success) => {
+      loadQuizData();
+      setOpen(false)})
       .catch((error) => console.log(error));
   };
   const saveQuiz = () => {
-    patchStatus(quiz.id).then((sucess) => {
-      if (sucess) {
-        setOpen(false);
-        reset();
-      }
-    });
+    postQuestions(quizQuestions, quiz.id, 1)
+    .then((success) => {
+      loadQuizData();
+      setOpen(false)})
+    .catch((error) => console.log(error));
   };
   return (
     <form>

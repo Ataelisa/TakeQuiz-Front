@@ -18,7 +18,7 @@ export function postQuiz(quiz) {
   return dataPromise;
 }
 
-export function getQuizQuestions(quizId) {
+export function getQuestionAnswers(quizId) {
   const promise = axios.get(baseUrl + `/${quizId}/questions`);
   const dataPromise = promise.then((response) => response.data);
 
@@ -32,19 +32,20 @@ export function patchQuiz(quizId, quiz) {
   return dataPromise;
 }
 
-export function putQuestions(questions, quizId) {
+export function postQuestions(questions, quizId, finish) {
 
   questions.forEach(question => {
     if(question.isNew === true) {
       question.id = newQuestionId;
-      question.answers.forEach(answer => {
-        if(answer.isNew) {
-          answer.id = newAnswerId;
-        }
-      })
     }
+
+    question.answers.forEach(answer => {
+      if(answer.isNew === true) {
+        answer.id = newAnswerId;
+      }
+    })
   });
-  const promise = axios.put(baseUrl + `/${quizId}/questions`, questions);
+  const promise = axios.post(baseUrl + `/${quizId}/questions?status=${finish}`, questions);
   const dataPromise = promise.then((response) => response.data);
 
   return dataPromise;
