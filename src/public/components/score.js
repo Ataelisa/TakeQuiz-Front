@@ -20,7 +20,7 @@ const winners = [
   {score: 3, name: "Nouhaila"},
   {score: 3, name: "Abdellah"},
 ]
-export default function Score() {
+export default function Score({score}) {
   return (
    <Box>
     <List component="form"
@@ -30,10 +30,9 @@ export default function Score() {
       noValidate
       autoComplete="off"
       sx={{ ...commonStyles}}>
-      {[1, 2, 3, 4].map((value) => (
-        <div>
+      {winners.map((winner, index) => (
         <ListItem
-          key={value}
+          key={index}
           disableGutters
           secondaryAction={
             <p>
@@ -41,15 +40,15 @@ export default function Score() {
             </p>
           }
         >
-          <ListItemText primary={`${value} Name`} />
+          <ListItemText primary={`${winner.name}`} />
         </ListItem>
-        </div>
       ))}
     </List>
     <br></br>
     <div align="right">
-    <p>Score: 5</p>
-    <p>Félicitation ou désolé vous n'êtes pas classé</p>
+    <p style={{color: "#3acebc"}}>{`Score: ${score.score} / ${score.numberOfQuestion}`}</p>
+    <p style={{color: "#3acebc"}}>Félicitation, Vous êtes classé.e</p>
+    {/* <p>Désolé vous n'êtes pas classé.e, Rejouer pour une Seconde fois</p> */}
     </div>
     </Box>
   );

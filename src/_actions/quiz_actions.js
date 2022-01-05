@@ -71,3 +71,24 @@ export function postEvaluteQuiz(quizId, questions) {
 
   return dataPromise;
 }
+
+export function postQuizResponses( quizId, questions) {
+
+  let responses = questions.map(question => {
+    let answers  = question.answers.filter(answer => answer.isCorrect === true);
+    answers = answers.map(answer => {
+      return { id: answer.id};
+    });
+    return {
+      id: question.id,
+      answers: [...answers]
+    }
+  }) 
+  const data = {
+    questions: responses
+  }
+  console.log(responses);
+  const promise = axios.post(baseUrl + `/${quizId}/evaluate`, data);
+  const dataPromise = promise.then(response => response.data)
+  return dataPromise;
+}

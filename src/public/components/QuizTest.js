@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getQuizTestQuestions } from "../../_actions/quiz_actions";
+import { getQuizTestQuestions, postQuizResponses } from "../../_actions/quiz_actions";
 import React from "react";
 import { Button, Checkbox, List, ListItemIcon, Tooltip } from "@mui/material";
 import { Box, styled } from "@mui/system";
@@ -7,21 +7,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import InfoIcon from '@mui/icons-material/Info';
-import { queries } from "@testing-library/react";
 
 const StyledList = styled(List)({
  border: "1px solid #c4c4c4",
  borderRadius: "2px",
 });
-export default function QuizTest({ id, setShowScore, setOpenPlayQuizDialog}) {
+export default function QuizTest({ id, setShowScore, setOpenPlayQuizDialog, setScore}) {
   const [ questions, setQuestions] = useState( []);
   const [currentQuestion, setCurrentQuestion] = useState(1)
   const [finalQuestion, setFinalQuestion] = useState(false)
-  const [result, setResult] = useState("")
-  const [percentage, setPercentage] = useState("")
   const [start, setStart] = useState(true)
-  const [counter, setCounter] = useState(0)
-  const [answers, setAnswers] = useState([])
   const [showResult, setShowResult] = useState(false)
 
   useEffect(() => {
@@ -45,12 +40,15 @@ export default function QuizTest({ id, setShowScore, setOpenPlayQuizDialog}) {
       testQuestions.push(question);
     });
 
-    setOpenPlayQuizDialog(false)
-    setShowScore(true);
-    console.log(testQuestions);
-    // evaluate quiz
-    //this.showResult = true;
-    //this.forceUpdate();
+    // evaluate Quiz
+    postQuizResponses(id, testQuestions).then(testResult => {
+      setScore(testResult)
+      setOpenPlayQuizDialog(false)
+      setShowScore(true);
+    })
+
+    
+
   };
   
   const handleQuestionFlow = (step) => {
