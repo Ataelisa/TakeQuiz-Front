@@ -12,7 +12,7 @@ const StyledList = styled(List)({
  border: "1px solid #c4c4c4",
  borderRadius: "2px",
 });
-export default function QuizTest({ id, setShowScore, setOpenPlayQuizDialog, setScore}) {
+export default function QuizTest({ id, setShowScore, setOpenPlayQuizDialog, setScore, playerPseudo}) {
   const [ questions, setQuestions] = useState( []);
   const [currentQuestion, setCurrentQuestion] = useState(1)
   const [finalQuestion, setFinalQuestion] = useState(false)
@@ -41,13 +41,11 @@ export default function QuizTest({ id, setShowScore, setOpenPlayQuizDialog, setS
     });
 
     // evaluate Quiz
-    postQuizResponses(id, testQuestions).then(testResult => {
+    postQuizResponses(id, testQuestions, playerPseudo).then(testResult => {
       setScore(testResult)
       setOpenPlayQuizDialog(false)
       setShowScore(true);
     })
-
-    
 
   };
   

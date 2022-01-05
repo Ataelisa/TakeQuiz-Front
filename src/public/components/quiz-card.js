@@ -14,6 +14,7 @@ import QuizTest from "./QuizTest";
 import Score from "./score";
 import { useState } from "react";
 import { QuizLogin } from "./QuizLogin";
+import { Player } from "./Player";
 
 const StyledCardMedia = styled(CardMedia)({
   objectFit: "contain",
@@ -25,7 +26,8 @@ export default function QuizCard({ quiz, loadQuizData }) {
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(null); 
   const [ quizLogin, setQuizLogin] = useState(false);
-
+  const [ quizPlayer, setquizPlayer] = useState(false);
+  const [name, setName] = useState("");
   const subHederText = () => {
     const theme = themes.find((theme) => theme.value === quiz.theme).label;
     const status = Status.find((statut) => statut.value === quiz.status).label;
@@ -57,7 +59,7 @@ export default function QuizCard({ quiz, loadQuizData }) {
         setOpen={setOpenPlayQuizDialog}
         title={"Take The Quiz".concat(': ', quiz.name)}
       >
-        <QuizTest id={quiz.id} setShowScore={setShowScore} setOpenPlayQuizDialog={setOpenPlayQuizDialog} setScore={setScore}></QuizTest>
+        <QuizTest id={quiz.id} setShowScore={setShowScore} setOpenPlayQuizDialog={setOpenPlayQuizDialog} setScore={setScore} playerPseudo={name}></QuizTest>
       </CustomDialog>
 
        {/* Quiz score */}
@@ -77,6 +79,15 @@ export default function QuizCard({ quiz, loadQuizData }) {
       >
         <QuizLogin quizId={quiz.id} setOpenEditCard={setOpenEditCard} setQuizLogin={setQuizLogin}></QuizLogin>
       </CustomDialog>
+
+       {/*Quiz Player */}
+       <CustomDialog
+        open={quizPlayer}
+        setOpen={setquizPlayer}
+        title={"Quiz Player"}
+      >
+        <Player quizId={quiz.id} setquizPlayer={setquizPlayer} setOpenPlayQuizDialog={setOpenPlayQuizDialog} setName={setName}></Player>
+      </CustomDialog>
      
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
@@ -93,7 +104,7 @@ export default function QuizCard({ quiz, loadQuizData }) {
               <Button
                 variant="outlined"
                 size="small"
-                onClick={() => setOpenPlayQuizDialog(true)}
+                onClick={() => setquizPlayer(true)}
               >
                 {"Play"}
               </Button>

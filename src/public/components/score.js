@@ -14,12 +14,7 @@ const commonStyles = {
   borderRadius: '20px'
 };
 
-const winners = [
-  {score: 5, name: "Saad"},
-  {score: 4, name: "Julia"},
-  {score: 3, name: "Nouhaila"},
-  {score: 3, name: "Abdellah"},
-]
+
 export default function Score({score}) {
   return (
    <Box>
@@ -30,25 +25,24 @@ export default function Score({score}) {
       noValidate
       autoComplete="off"
       sx={{ ...commonStyles}}>
-      {winners.map((winner, index) => (
+      {score.players.map((player, index) => (
         <ListItem
           key={index}
           disableGutters
           secondaryAction={
             <p>
-              Score :
+              Score : {player.score}
             </p>
           }
         >
-          <ListItemText primary={`${winner.name}`} />
+          <ListItemText primary={`${player.name}`} />
         </ListItem>
       ))}
     </List>
     <br></br>
     <div align="right">
     <p style={{color: "#3acebc"}}>{`Score: ${score.score} / ${score.numberOfQuestion}`}</p>
-    <p style={{color: "#3acebc"}}>Félicitation, Vous êtes classé.e</p>
-    {/* <p>Désolé vous n'êtes pas classé.e, Rejouer pour une Seconde fois</p> */}
+    {score.isRank?  <p style={{color: "#3acebc"}}>Félicitation, Vous êtes classé.e</p>: <p>Désolé vous n'êtes pas classé.e, Rejouer pour une Seconde fois</p>}
     </div>
     </Box>
   );
