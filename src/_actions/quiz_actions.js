@@ -92,3 +92,13 @@ export function postQuizResponses( quizId, questions) {
   const dataPromise = promise.then(response => response.data)
   return dataPromise;
 }
+
+export function loginToQuiz(quizId, quizPassword) {
+
+  console.log(typeof quizPassword)
+  const promise = axios.post(baseUrl + `/${quizId}/unlock`, {QuizPassword:quizPassword});
+  const dataPromise = promise.then(response => response.data);
+
+  return dataPromise;
+}
+ 

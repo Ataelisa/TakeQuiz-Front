@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import EditQuiz from "../components/edit-quiz";
@@ -14,6 +13,7 @@ import CustomDialog from "./custom-dialog";
 import QuizTest from "./QuizTest";
 import Score from "./score";
 import { useState } from "react";
+import { QuizLogin } from "./QuizLogin";
 
 const StyledCardMedia = styled(CardMedia)({
   objectFit: "contain",
@@ -24,6 +24,7 @@ export default function QuizCard({ quiz, loadQuizData }) {
   const [openPlayQuizDialog, setOpenPlayQuizDialog] = useState(false);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(null); 
+  const [ quizLogin, setQuizLogin] = useState(false);
 
   const subHederText = () => {
     const theme = themes.find((theme) => theme.value === quiz.theme).label;
@@ -67,6 +68,16 @@ export default function QuizCard({ quiz, loadQuizData }) {
       >
        <Score score={score}></Score>
       </CustomDialog>
+
+       {/*Quiz Login */}
+       <CustomDialog
+        open={quizLogin}
+        setOpen={setQuizLogin}
+        title={"Quiz Login"}
+      >
+        <QuizLogin quizId={quiz.id} setOpenEditCard={setOpenEditCard} setQuizLogin={setQuizLogin}></QuizLogin>
+      </CustomDialog>
+     
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           action={
@@ -74,7 +85,7 @@ export default function QuizCard({ quiz, loadQuizData }) {
               <Button
                 variant="outlined"
                 size="small"
-                onClick={() => setOpenEditCard(true)}
+                onClick={() => setQuizLogin(true)}
               >
                 {"Edit"}
               </Button>
